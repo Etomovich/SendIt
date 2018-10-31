@@ -161,6 +161,7 @@ table {
 */
 body{
     font-family: Arial, Helvetica, sans-serif;
+    background: #e7dfdd;
 }
 
 .head-div {
@@ -179,14 +180,17 @@ body{
     padding-left: 10px;
 }
 
-.sendit-logo a{
-    
+.sendit-logo h1{
     color: rgb(67, 28, 211);
     font-weight: bolder;
     font-size: 26px;
+}
+
+.sendit-logo h1 a{
+    color: rgb(67, 28, 211);   
     text-decoration: none;
 }
-.sendit-logo a:hover{
+.sendit-logo h1 a:hover{
     color: #A239CA;
     font-weight: bolder;
     font-size: 26px;
@@ -323,7 +327,7 @@ body{
     width: 100%;
     text-align: center;
     left: 0;
-    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: rgb(67, 28, 211);
     right: 0;
