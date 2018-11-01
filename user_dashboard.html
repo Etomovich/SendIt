@@ -15,6 +15,7 @@
         </div>
         <nav class="navig">
             <ul>
+                <li><a href="#">Orders</a></li>
                 <li><a href="index.html">LogOut</a></li>
                 <li><a href="#">Help</a></li>
             </ul>
@@ -23,6 +24,7 @@
             <div class="dropdown">
                 <button class="nav-small-devices dropbtn" onclick="myFunction()">&#9776;</button>
                 <div class="dropdown-content" id="myDropdown">
+                    <a href="#">Orders</a>
                     <a href="index.html">LogOut</a>
                     <a href="#">Help</a>
                 </div>
@@ -32,22 +34,30 @@
     <section class="dashboard-main">
             <div class="dash-item">
                 <h1>New Parcel Order</h1>
-                <p>This tab allows a user to create a parcel delivery order for the current
-                    user. Visit the active orders to view your parcel.
+                <p class="big-screen">This tab allows a user to create a parcel delivery order for the current
+                    user. View the 'active deliveries' tab to view your proccessed orders or visit
+                    'orders' in the navigation to view your un-proccessed orders.
                 </p>
+                <p class="small-screen">Create a new order.</p>
+                <br/><br/>
                 <a class="btn-item" href="create_delivery_order.html">visit</a>
             </div>
             <div class="dash-item">
-                <h1>Closed Orders</h1>
-                <p>This tab allows a user to view all orders performed by this user and are completed.
+                <h1>Completed Deliveries</h1>
+                <p class="big-screen">This tab allows a user to view all deliveries performed by this user and are completed with
+                    a status of either 'cancelled' or 'delivered'.
                 </p>
+                <p class="small-screen">View completed deliveries.</p>
+                <br/><br/>
                 <a class="btn-item" href="#">visit</a>
             </div>
             <div class="dash-item">
-                <h1>Active Orders</h1>
-                <p>This tab allows a user to view all pending orders. A user can only edit orders with
-                    a status of 'Not Started'.
+                <h1>Active Deliveries</h1>
+                <p class="big-screen">This tab allows a user to view all pending deliveries with a status of either 'in-transit' or 'not-started'.
+                    A user can only edit orders with a status of 'Not Started'.
                 </p>
+                <p class="small-screen">View active deliveries.</p>
+                <br/><br/>
                 <a class="btn-item" href="#">visit</a>
             </div>
         </section>
