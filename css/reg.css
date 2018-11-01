@@ -136,7 +136,9 @@ fieldset {
         display: none;
     }
     .login-div{
-        width: 100%;
+        width: 90%;
+        margin-right: 10px;
+        margin-left: 10px;
     }
 }
 
