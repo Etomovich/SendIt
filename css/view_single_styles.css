@@ -1,0 +1,120 @@
+.container-main{
+    margin-bottom: 100px;
+    display: inline-block;
+    text-align: center;
+    width: 100%
+}
+
+.view-div{
+    display: inline-block;
+    width: 60%;
+    margin-left: 10px;
+    padding-top: 15px;
+    text-align: center;
+    border: 3px solid rgb(67, 28, 211);
+    border-radius: 5px;
+    font: 14px/1.4 Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    border-top: 0;
+    padding: 0;
+    min-height: 400px;
+    margin-top: 50px;
+    margin-right:10px;
+    margin-bottom: 30px;
+    background: #f0f0f2;
+}
+label{
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.view-div h2{
+    display: inline-block;
+}
+.view-div h4{
+    display: inline-block;
+}
+
+.view-div h1 {
+    color: #101920;
+    display: block;
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 0px rgba(44, 11, 235, 0.7);
+}
+label h2{
+    color: #395870;
+    font-size: 18px;
+    font-weight: 900;
+}
+label h4{
+    color: rgb(26, 1, 163);
+    font-size: 16px;
+    font-weight: 300;
+}
+.btn-form {
+    background: linear-gradient(rgb(67, 28, 211), rgb(150, 129, 228));
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration:  none;
+    margin-top: 20px;
+    margin-left: 10px;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.btn-form:hover{
+    background: linear-gradient(rgb(150, 129, 228),rgb(67, 28, 211));
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 20px;
+    border-radius: 5px;
+}
+
+.btn-error {
+    background: linear-gradient(rgb(226, 16, 86), rgb(126, 104, 108));
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-decoration: none;
+  }
+  
+.btn-error:hover{
+    background: linear-gradient(rgb(126, 104, 108),rgb(226, 16, 86));
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.view-div span{
+    display: inline-block;
+    margin-bottom: 25px;
+}
+

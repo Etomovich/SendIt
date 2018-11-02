@@ -131,7 +131,8 @@ fieldset {
     border-radius: 5px;
   }
 
-  @media only screen and (max-width: 700px) {
+  
+@media only screen and (max-width: 700px) {
     .banner {
         display: none;
     }
