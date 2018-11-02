@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SendIt - Edit Order</title>
+    <link rel="stylesheet" href="css/headerandfooter.css">
+    <link rel="stylesheet" href="css/big_input_styles.css">
+    <script src="js/myjs.js"></script>
+</head>
+<body>
+    <header class="head-div clearfix">
+        <div class="sendit-logo">
+            <h1><a href="index.html">SendIt</a></h1>
+        </div>
+        <nav class="navig">
+            <ul>
+                <li><a href="index.html">LogOut</a></li>
+            </ul>
+        </nav>
+        <nav class="navig2">
+            <div class="dropdown">
+                <button class="nav-small-devices dropbtn" onclick="myFunction()">&#9776;</button>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="index.html">LogOut</a>
+                </div>
+            </div>
+        </nav>                    
+    </header>
+    <section class="delivery-main">
+        <div class="delivery-div">
+            <form action="#" method="#">
+                <fieldset class="delivery-group">
+                    <h1>Admin Edit Delivery</h1>
+                    <label>
+                        Parcel Name: letter to Kevo
+                    </label>
+                                           
+                    <label>
+                        Change Status
+                        <input type="text" name="pay_mode" value="in-transit" required>
+                    </label>
+                    <label>
+                        Current Location
+                        <input type="text" name="pay_mode" value="Nairobi" required>
+                    </label>
+                </fieldset>
+                    <br>
+                    <span>
+                        <a href="parcel_view_per_shipment.html" class="btn-error">Back</a>
+                        <input class="btn-form" type="submit" name="create_order" value="Edit">
+                    </span>
+                </form>
+    
+            </div>
+        
+    </section>
+
+    <footer class="footer-div">
+        <div class="footer-items">
+            <p>SendIt Courier Services &copy; 2018</p>
+        </div>
+    </footer>
+
+</body>
+</html>
