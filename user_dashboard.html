@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SendIt - My Dashboard</title>
+    <link rel="stylesheet" href="css/headerandfooter.css">
+    <link rel="stylesheet" href="css/dash.css">
+    <script src="js/myjs.js"></script>
+</head>
+<body>
+    <header class="head-div clearfix">
+        <div class="sendit-logo">
+            <h1><a href="index.html">SendIt</a></h1>
+        </div>
+        <nav class="navig">
+            <ul>
+                <li><a href="unprocessed_orders.html">My Orders</a></li>
+                <li><a href="index.html">LogOut</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </nav>
+        <nav class="navig2">
+            <div class="dropdown">
+                <button class="nav-small-devices dropbtn" onclick="myFunction()">&#9776;</button>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="unprocessed_orders.html">My Orders</a>
+                    <a href="index.html">LogOut</a>
+                    <a href="#">Help</a>
+                </div>
+            </div>
+        </nav>                    
+    </header>
+    <section class="dashboard-main">
+            <div class="dash-item">
+                <h1>New Parcel Order</h1>
+                <p class="big-screen">This tab allows a user to create a parcel delivery order for the current
+                    user. View the 'active deliveries' tab to view your proccessed orders or visit
+                    'orders' in the navigation to view your un-proccessed orders.
+                </p>
+                <p class="small-screen">Create a new order.</p>
+                <br/><br/>
+                <a class="btn-item" href="create_delivery_order.html">visit</a>
+            </div>
+            <div class="dash-item">
+                <h1>Completed Deliveries</h1>
+                <p class="big-screen">This tab allows a user to view all deliveries performed by this user and are completed with
+                    a status of either 'cancelled' or 'delivered'.
+                </p>
+                <p class="small-screen">View completed deliveries.</p>
+                <br/><br/>
+                <a class="btn-item" href="complete_deliveries.html">visit</a>
+            </div>
+            <div class="dash-item">
+                <h1>Active Deliveries</h1>
+                <p class="big-screen">This tab allows a user to view all pending deliveries with a status of either 'in-transit' or 'not-started'.
+                    A user can only edit orders with a status of 'Not Started'.
+                </p>
+                <p class="small-screen">View active deliveries.</p>
+                <br/><br/>
+                <a class="btn-item" href="active_deliveries.html">visit</a>
+            </div>
+        </section>
+
+    <footer class="footer-div">
+        <div class="footer-items">
+            <p>SendIt Courier Services &copy; 2018</p>
+        </div>
+    </footer>
+
+</body>
+</html>
