@@ -15,18 +15,14 @@
         </div>
         <nav class="navig">
             <ul>
-                <li><a href="unprocessed_orders.html">My Orders</a></li>
-                <li><a href="index.html">LogOut</a></li>
-                <li><a href="#">Help</a></li>
+                <li><a href="#">LogOut</a></li>
             </ul>
         </nav>
         <nav class="navig2">
             <div class="dropdown">
                 <button class="nav-small-devices dropbtn" onclick="myFunction()">&#9776;</button>
                 <div class="dropdown-content" id="myDropdown">
-                    <a href="unprocessed_orders.html">My Orders</a>
                     <a href="index.html">LogOut</a>
-                    <a href="#">Help</a>
                 </div>
             </div>
         </nav>                    
@@ -35,28 +31,26 @@
             <div class="dash-item">
                 <h1>New Parcel Order</h1>
                 <p class="big-screen">This tab allows a user to create a parcel delivery order for the current
-                    user. View the 'active deliveries' tab to view your proccessed orders or visit
-                    'orders' in the navigation to view your un-proccessed orders.
+                    user.
                 </p>
                 <p class="small-screen">Create a new order.</p>
                 <br/><br/>
-                <a class="btn-item" href="create_delivery_order.html">visit</a>
+                <a class="btn-item" id="new_order" href="my_list_of_orders.html">visit</a>
             </div>
             <div class="dash-item">
-                <h1>Completed Deliveries</h1>
-                <p class="big-screen">This tab allows a user to view all deliveries performed by this user and are completed with
-                    a status of either 'cancelled' or 'delivered'.
+                <h1>My Parcels</h1>
+                <p class="big-screen">This tab allows a user to view all his or her sent parcels.
                 </p>
-                <p class="small-screen">View completed deliveries.</p>
+                <p class="small-screen">My Parcels.</p>
                 <br/><br/>
                 <a class="btn-item" href="complete_deliveries.html">visit</a>
             </div>
             <div class="dash-item">
-                <h1>Active Deliveries</h1>
-                <p class="big-screen">This tab allows a user to view all pending deliveries with a status of either 'in-transit' or 'not-started'.
-                    A user can only edit orders with a status of 'Not Started'.
+                <h1>My Orders</h1>
+                <p class="big-screen">This tab allows a user to view all the orders that he or
+                    she has ever sent.
                 </p>
-                <p class="small-screen">View active deliveries.</p>
+                <p class="small-screen">View orders.</p>
                 <br/><br/>
                 <a class="btn-item" href="active_deliveries.html">visit</a>
             </div>

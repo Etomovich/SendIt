@@ -11,12 +11,11 @@
 <body>
     <header class="head-div clearfix">
         <div class="sendit-logo">
-            <h1><a href="#">SendIt</a></h1>
+            <h1><a href="index.html">SendIt</a></h1>
         </div>
         <nav class="navig">
             <ul>
                 <li><a href="login.html">Login</a></li>
-                <li><a href="#">Help</a></li>
             </ul>
         </nav>
         <nav class="navig2">
@@ -24,7 +23,6 @@
                 <button class="nav-small-devices dropbtn" onclick="myFunction()">&#9776;</button>
                 <div class="dropdown-content" id="myDropdown">
                     <a href="login.html">Login</a>
-                    <a href="#">Help</a>
                 </div>
             </div>
         </nav>                    
@@ -39,36 +37,32 @@
             <a class="btn-banner" href="login.html">Login</a>
         </div>
         <div class="login-div">
-            <form action="#" method="#">
+            <form action="#" id="registerForm">
                 <fieldset class="login-group">
                     <label>
                         Username
-                        <input type="text" name="name" placeholder="Enter 'Username'" required>
-                    </label>
-                    <label>
-                        Fullname
-                        <input type="text" name="name" placeholder="Enter your full name" required>
+                        <input type="text" id="myUsername" placeholder="Enter 'Username'" required>
                     </label>
                     <label>
                         Email
-                        <input type="email" name="name" placeholder="Enter 'email'" required>
+                        <input type="email" id="myEmail" placeholder="Enter 'email'" required>
                     </label>
                     <label>
                         Phone Number
-                        <input type="email" name="name" placeholder="Enter 'email'" required>
+                        <input type="text" id="myPhone" placeholder="Enter 'phone number'" required>
                     </label>  
                     <label>
                         Password
-                        <input type="password" name="email" placeholder="Password" required>
+                        <input type="password" id="myPassword" placeholder="Password" required>
                     </label>
                     <label>
                         Retype Password
-                        <input type="password" name="email" placeholder="Retype Password" required>
+                        <input type="password" id="retypePassword" placeholder="Retype Password" required>
                     </label>
                 </fieldset>
-                    <br>
-                    <input class="btn-form" type="submit" name="submit" value="Register">
-                </form>
+                <br>
+                <input class="btn-form" type="submit" name="submit" value="Register" id="registerButton">
+            </form>
     
             </div>
         
@@ -79,6 +73,6 @@
             <p>SendIt Courier Services &copy; 2018</p>
         </div>
     </footer>
-
+<script src="js/register.js"></script>
 </body>
 </html>

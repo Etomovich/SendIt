@@ -29,36 +29,36 @@
     </header>
     <section class="delivery-main">
         <div class="delivery-div">
-            <form action="#" method="#">
+            <form action="#" id="createOrderForm">
                 <fieldset class="delivery-group">
                     <h1>Create Order</h1>
                     <label>
                         Order Name 
-                        <input type="text" name="order_name" placeholder="Enter parcel name" required>
+                        <input type="text" id="order_name" placeholder="Enter parcel name" required>
                     </label>
                     <label>
                         Order Description
                     </label>
-                    <textarea rows="5" columns="50" name="order_description" placeholder="Write the parcel description." required></textarea>
+                    <textarea rows="5" columns="50" id="order_description" placeholder="Write the parcel description." required></textarea>
                        
                     <label>
                         Payment Mode
-                        <input type="text" name="pay_mode" placeholder="Enter payment channel used." required>
+                        <input type="text" id="pay_mode" placeholder="Enter payment channel used." required>
                     </label>
                     <label>
                         Payment Details
                     </label>
-                    <textarea  name="payment_details" placeholder="Provide payment evidence." required></textarea>
+                    <textarea  id="payment_details" placeholder="Provide payment evidence." required></textarea>
                     
                     <label>
                         Parcel Submission Station
-                        <input type="text" name="station" placeholder="Enter where you submited parcel.">
+                        <input type="text" id="station" placeholder="Enter where you submited parcel.">
                     </label> 
                 </fieldset>
                     <br>
                     <span>
                         <a href="user_dashboard.html" class="btn-error">Back</a>
-                        <input class="btn-form" type="submit" name="create_order" value="Create">
+                        <input class="btn-form" type="submit" id="createOrderBtn" value="Create">
                     </span>
                 </form>
     
@@ -71,6 +71,6 @@
             <p>SendIt Courier Services &copy; 2018</p>
         </div>
     </footer>
-
+    <script src="js/create_order.js"></script>
 </body>
 </html>
