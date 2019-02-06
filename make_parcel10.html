@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>SendIt - Edit Order</title>
+    <title>SendIt - Create Parcel</title>
     <link rel="stylesheet" href="css/headerandfooter.css">
     <link rel="stylesheet" href="css/big_input_styles.css">
     <script src="js/myjs.js"></script>
@@ -29,30 +29,39 @@
     </header>
     <section class="delivery-main">
         <div class="delivery-div">
-            <form action="#" method="#">
+            <form action="#" id="createOrderForm">
                 <fieldset class="delivery-group">
-                    <h1>Admin Edit Delivery</h1>
+                    <h1>Create Parcel</h1>
                     <label>
-                        Parcel Name: letter to Kevo
+                        Parcel Name 
+                        <input type="text" id="parcel_name11" placeholder="Enter parcel name" required>
                     </label>
-                                           
+                   <label>
+                        Weight
+                        <input type="text" id="weight11" placeholder="Enter parcel weight." required>
+                    </label>   
                     <label>
-                        Change Status
-                        <input type="text" name="pay_mode" value="in-transit" required>
+                        Owner Id
+                        <input type="text" id="owner_id11" placeholder="Enter the parcel owner" required>
                     </label>
                     <label>
-                        Current Location
-                        <input type="text" name="pay_mode" value="Nairobi" required>
+                        Submission Station
+                        <input type="text" id="submission_station11" placeholder="Parcel deposit station" required>
                     </label>
+                    <label>
+                        Present Location
+                        <input type="text" id="present_location11" placeholder="Parcel's current location" required>
+                    </label>
+
                 </fieldset>
                     <br>
                     <span>
-                        <a href="parcel_view_per_shipment.html" class="btn-error">Back</a>
-                        <input class="btn-form" type="submit" name="create_order" value="Edit">
+                        <button id="make_the_order22" class="btn-error">Submit</button>
+                        <button id="my_parcels22" class="btn-form">All Parcel</button>
                     </span>
-                </form>
+            </form>
     
-            </div>
+        </div>
         
     </section>
 
@@ -61,6 +70,6 @@
             <p>SendIt Courier Services &copy; 2018</p>
         </div>
     </footer>
-
+    <script src="js/create_parcel.js"></script>
 </body>
 </html>

@@ -29,40 +29,47 @@
     </header>
     <section class="delivery-main">
         <div class="delivery-div">
-            <form action="#" method="#">
-                <fieldset class="delivery-group">
+            <form action="#" id="createOrderForm">
+                <fieldset class="delivery-group"> 
                     <h1>Create Order</h1>
-                    <label>
-                        Order Name 
-                        <input type="text" name="order_name" placeholder="Enter parcel name" required>
+                    <label id="the_parcel_id11">
+                    PARCEL ID                        
                     </label>
                     <label>
-                        Order Description
+                        Parcel Name 
+                        <input type="text" id="parcel_name11" placeholder="Enter parcel name" required>
                     </label>
-                    <textarea rows="5" columns="50" name="order_description" placeholder="Write the parcel description." required></textarea>
-                       
                     <label>
-                        Payment Mode
-                        <input type="text" name="pay_mode" placeholder="Enter payment channel used." required>
+                        Parcel Description
+                    </label>
+                    <textarea rows="5" columns="50" id="parcel_description11" placeholder="Write the parcel description." required></textarea>
+                    <label>
+                        Destination
+                        <input type="text" id="destination11" placeholder="Enter where the parcel is going." required>
+                    </label>   
+                    <label>
+                        Pay Mode
+                        <input type="text" id="pay_mode11" placeholder="Enter the means of pay e.g. MPESA " required>
                     </label>
                     <label>
                         Payment Details
                     </label>
-                    <textarea  name="payment_details" placeholder="Provide payment evidence." required></textarea>
-                    
+                    <textarea  id="payment_details11" placeholder="Provide payment evidence. e.g. receipt" required></textarea>
                     <label>
-                        Parcel Submission Station
-                        <input type="text" name="station" placeholder="Enter where you submited parcel.">
-                    </label> 
+                        Amount Paid
+                        <input type="text" id="amount_paid11" placeholder="Enter the amount paid in DECIMAL e.g. 12345.45" required>
+                    </label>
+
                 </fieldset>
                     <br>
                     <span>
-                        <a href="user_dashboard.html" class="btn-error">Back</a>
-                        <input class="btn-form" type="submit" name="create_order" value="Create">
+                        <button id="make_the_order22" class="btn-error">Submit</button>
+                        <button id="my_parcels22" class="btn-form">My Parcels</button>
+                        <button id="my_orders22" class="btn-form">My Orders</button>
                     </span>
-                </form>
+            </form>
     
-            </div>
+        </div>
         
     </section>
 
@@ -71,6 +78,6 @@
             <p>SendIt Courier Services &copy; 2018</p>
         </div>
     </footer>
-
+    <script src="js/create_order.js"></script>
 </body>
 </html>
