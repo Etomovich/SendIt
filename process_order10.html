@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SendIt - Process Order</title>
+    <link rel="stylesheet" href="css/headerandfooter.css">
+    <link rel="stylesheet" href="css/big_input_styles.css">
+    <script src="js/myjs.js"></script>
+</head>
+<body>
+    <header class="head-div clearfix">
+        <div class="sendit-logo">
+            <h1><a href="index.html">SendIt</a></h1>
+        </div>
+        <nav class="navig">
+            <ul>
+                <li><a href="index.html">LogOut</a></li>
+            </ul>
+        </nav>
+        <nav class="navig2">
+            <div class="dropdown">
+                <button class="nav-small-devices dropbtn" onclick="myFunction()">&#9776;</button>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="index.html">LogOut</a>
+                </div>
+            </div>
+        </nav>                    
+    </header>
+    <section class="delivery-main">
+        <div class="delivery-div">
+            <form action="#" id="createOrderForm">
+                <fieldset class="delivery-group"> 
+                    <h1>Process Order</h1>
+                    <label id="the_order_id11">
+                    ORDER ID                        
+                    </label>
+                    <label id="the_parcel_id11">
+                    PARCEL ID                        
+                    </label>
+                    <label id="the_parcel_name11">
+                    PARCEL NAME                        
+                    </label>
+                    <label>
+                        Order Status
+                        <select id="order_status11">
+                            <option value ="accepted">accepted</option>
+                            <option value ="rejected">rejected</option>
+                            <option value ="unprocessed">unprocessed</option>
+                        </select>
+                    </label>
+                    <label>
+                        Parcel Status
+                        <select id="parcel_status11">
+                            <option value ="not_started">Not Started</option>
+                            <option value ="in_transit">In Transit</option>
+                            <option value ="delivered">Delivered</option>
+                            <option value ="cancelled">Cancelled</option>
+                        </select>
+                    </label>
+                    <label>
+                        Approved
+                        <select id="approved11">
+                            <option value ="approved">approved</option>
+                            <option value ="No">not yet</option>
+                        </select>
+                    </label>
+                    <label>
+                        Order Feedback
+                    </label>
+                    <textarea rows="5" columns="50" id="feedback11" placeholder="Give the user feedback" required></textarea>
+                       
+                </fieldset>
+                    <br>
+                    <span>
+                        <button id="process_the_order22" class="btn-error">Submit</button>
+                        <button id="view_this_order22" class="btn-form">View Order</button>
+                        <button id="view_this_parcel22" class="btn-form">View Parcel</button>
+                        <button id="edit_this_parcel22" class="btn-form">Update Parcel</button>
+                    </span>
+            </form>
+    
+        </div>
+        
+    </section>
+
+    <footer class="footer-div">
+        <div class="footer-items">
+            <p>SendIt Courier Services &copy; 2018</p>
+        </div>
+    </footer>
+    <script src="js/process_the_order.js"></script>
+</body>
+</html>

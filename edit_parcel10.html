@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SendIt - Edit Order</title>
+    <link rel="stylesheet" href="css/headerandfooter.css">
+    <link rel="stylesheet" href="css/big_input_styles.css">
+    <script src="js/myjs.js"></script>
+</head>
+<body>
+    <header class="head-div clearfix">
+        <div class="sendit-logo">
+            <h1><a href="index.html">SendIt</a></h1>
+        </div>
+        <nav class="navig">
+            <ul>
+                <li><a href="index.html">LogOut</a></li>
+            </ul>
+        </nav>
+        <nav class="navig2">
+            <div class="dropdown">
+                <button class="nav-small-devices dropbtn" onclick="myFunction()">&#9776;</button>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="index.html">LogOut</a>
+                </div>
+            </div>
+        </nav>                    
+    </header>
+    <section class="delivery-main">
+        <div class="delivery-div">
+            <form action="#" id="createOrderForm">
+                <fieldset class="delivery-group">
+                    <h1>Edit Parcel</h1>
+                    <label id="the_parcel_id11">
+                    PARCEL ID                        
+                    </label>
+                    <label>
+                        Parcel Name 
+                        <input type="text" id="parcel_name11" placeholder="Enter parcel name" required>
+                    </label>
+                    <label>
+                        Weight
+                        <input type="text" id="weight11" placeholder="Enter parcel weight." required>
+                    </label>
+                    <label>
+                        Destination
+                        <input type="text" id="destination11" placeholder="Enter where the parcel is going." required>
+                    </label>   
+                    <label>
+                        Expected Pay
+                        <input type="text" id="expected_pay11" placeholder="Cost of delivery" required>
+                    </label>
+                    <label>
+                        Submission Station
+                        <input type="text" id="submission_station11" placeholder="Parcel deposit station" required>
+                    </label>
+                    <label>
+                        Owner ID
+                        <input type="text" id="owner_id11" placeholder="Enter the parcel owner" required>
+                    </label>
+                    <label>
+                        Present Location
+                        <input type="text" id="present_location11" placeholder="Parcel's current location" required>
+                    </label>
+                    <label>
+                        Feedback
+                    </label>
+                    <textarea rows="5" columns="50" id="feedback11" placeholder="Response state of parcel" required></textarea>
+
+                </fieldset>
+                    <br>
+                    <span>
+                        <button id="edit_the_parcel22" class="btn-error">Submit</button>
+                        <button id="my_parcels22" class="btn-form">Parcels</button>
+                    </span>
+            </form>
+    
+        </div>
+        
+    </section>
+
+    <footer class="footer-div">
+        <div class="footer-items">
+            <p>SendIt Courier Services &copy; 2018</p>
+        </div>
+    </footer>
+    <script src="js/edit_parcel.js"></script>
+</body>
+</html>

@@ -4,15 +4,11 @@ let url = "https://etomovich-sendit.herokuapp.com";
 window.addEventListener("load", startPoint);
 
 let submit_reply12 = document.getElementById("make_the_order22");
-submit_reply12.setAttribute("onclick","makeOrder()");
+submit_reply12.setAttribute("onclick","makeAParcel()");
 
 let the_parcels12 = document.getElementById("my_parcels22");
-let the_page = "my_list_of_parcels10.html";
+let the_page = "admin_all_parcels10.html";
 the_parcels12.setAttribute("onclick",`nextPage("${the_page}")`);
-
-let the_orders12 = document.getElementById("my_orders22");
-the_page = "my_list_of_orders10.html";
-the_orders12.setAttribute("onclick",`nextPage("${the_page}")`);
 
 function startPoint(e){
     e.preventDefault();
@@ -37,17 +33,9 @@ function our_display(){
         nextPage(the_login); 
     }
 
-    let currentPage = undefined;
-    if (localStorage.getItem("make_order_parc_id")=== null){
-        alert("Please choose a parcel to make an order!!")
-        currentPage = "my_list_of_parcels10.html";
-        nextPage(currentPage);
-    }
-    let this_parcel_id = document.getElementById("the_parcel_id11");
-    this_parcel_id.innerHTML = "Parcel ID : "+ localStorage.getItem("make_order_parc_id");
 }
- 
-function makeOrder(){
+
+function makeAParcel(){
     if(localStorage.getItem("this_token")=== null){
         alert("Please login to access this page!!");
         let the_login = "login.html";
@@ -55,31 +43,23 @@ function makeOrder(){
     }
 
     let currentPage = undefined;
-    if (localStorage.getItem("view_parc_id")=== null){
-        alert("Please choose a parcel to view!!")
-        currentPage = "my_list_of_parcels10.html";
-        nextPage(currentPage);
-    }
-    currentPage = currentPage = url + '/api/v2/orders';
+    currentPage = currentPage = url + '/api/v2/parcels';
 
+    let owner_id_val1 = document.getElementById("owner_id11").value;
+    let weight_val1 = document.getElementById("weight11").value;
     let parcel_name_val1 = document.getElementById("parcel_name11").value;
-    let parcel_description_val1 = document.getElementById("parcel_description11").value;
-    let pay_mode_val1 = document.getElementById("pay_mode11").value;
-    let pay_proof_val1 = document.getElementById("payment_details11").value;
-    let amount_paid_val1 = document.getElementById("amount_paid11").value;
-    let destination_val1 = document.getElementById("destination11").value;
+    let submission_station_val1 = document.getElementById("submission_station11").value;
+    let present_location_val1 = document.getElementById("present_location11").value;
 
     let statusCode = undefined;
     fetch(currentPage, {
         method: 'post',
         body: JSON.stringify({
-            parcel_id: parseInt(localStorage.getItem("make_order_parc_id"),10),
+            owner_id: owner_id_val1,
+            weight: weight_val1,
             parcel_name: parcel_name_val1,
-            parcel_description: parcel_description_val1,
-            pay_mode: pay_mode_val1,
-            pay_proof: pay_proof_val1,
-            amount_paid: amount_paid_val1,
-            destination: destination_val1
+            submission_station: submission_station_val1,
+            present_location: present_location_val1
         }),
         headers: {
             "Content-type": "application/json; charset=utf-8",
@@ -87,10 +67,9 @@ function makeOrder(){
         }
     }).then(function (response) {
         statusCode = response.status;
-        localStorage.removeItem("make_order_parc_id");
         console.log(statusCode);
         if (statusCode!== 201) {
-            console.log("Error occured while fetching user's parcels. Status"  +
+            console.log("Error occured while creating a parcel. Status"  +
                 response.status);
         }
         return response.json();
@@ -116,10 +95,8 @@ function makeOrder(){
             }
         }
         else{
-            currentPage = "my_list_of_parcels10.html";
+            currentPage = "admin_all_parcels10.html";
             nextPage(currentPage);
         }
     }).catch(err => console.log(err))
 }
-
-

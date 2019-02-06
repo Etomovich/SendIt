@@ -1,11 +1,10 @@
 //const url = 'http://127.0.0.1:5000';
 let url = "https://etomovich-sendit.herokuapp.com";
-
 window.addEventListener("load", startPoint);
 
 function startPoint(e){
     e.preventDefault();
-    return myParcels();
+    return allOrders();
 }
 
 function nextPage(page) {
@@ -42,14 +41,19 @@ function viewPrevious(prev_url){
     } 
 }
 
-function userCancelParcel(my_parc_id){
-    let mess = "Note: Cancelling this parcel delivery will cause this parcel to be returned to the initial submission station. "
-    mess = mess + "Press OK to cancel delivery.\n"
-    mess =  mess + "Are you sure you want to cancel this parcel delivery??\n";
+function viewOrder(my_order_id){
+    my_view_order_page = "view_order10.html";
+    localStorage.setItem('view_order_id', my_order_id);
+    nextPage(my_view_order_page);
+}
+
+function deleteOrder(my_order_id){
+    let mess = "Note: You are about to delete this order\n"
+    mess =  mess + "Are you sure you want to delete this order??\n";
     if (confirm(mess)){
-        let currentPage = url + '/api/v2/parcels/'+String(my_parc_id)+'/cancel';
+        let currentPage = url + '/api/v2/admin/order/'+String(my_order_id);
         fetch(currentPage, {
-            method: 'put',
+            method: 'delete',
             headers: {
                 "Content-type": "application/json; charset=utf-8",
                 "Authorization": localStorage.getItem("this_token")
@@ -78,10 +82,10 @@ function userCancelParcel(my_parc_id){
                 }
             }
             else{
-                alert("Parcel delivery sucessfully cancelled!!");
+                alert("Order deleted!!");
                 let holder = document.getElementById("main-section12");
                 holder.innerHTML = "";
-                return myParcels();
+                return myUnprocessedOrders();
             }        
         }).catch(err => console.log(err))
     }
@@ -90,25 +94,16 @@ function userCancelParcel(my_parc_id){
     }
 }
 
-function makeOrder(my_parc_id){
-    let my_make_parcel_page = "make_order10.html";
-    localStorage.setItem('make_order_parc_id', my_parc_id);
-    nextPage(my_make_parcel_page); 
+function processOrder(this_order_id, this_parcel_id){
+    let my_process_page = "process_order10.html";
+    
+    localStorage.setItem('process_order_id', this_order_id);
+    localStorage.setItem('process_parcel_id', this_parcel_id);
+
+    nextPage(my_process_page); 
 }
 
-function editOrder(my_order_id){
-    let my_edit_parcel_page = "edit_order10.html";
-    localStorage.setItem('edit_order_id', my_order_id);
-    nextPage(my_edit_parcel_page); 
-}
-
-function userViewParcel(my_parc_id){
-    my_view_parcel_page = "view_parcel10.html";
-    localStorage.setItem('view_parc_id', my_parc_id);
-    nextPage(my_view_parcel_page);    
-}
-
-function myParcels(my_url=false) {
+function allOrders(my_url=false) {
     if(localStorage.getItem("this_token")=== null){
         alert("Please login to access this page!!");
         let the_login = "login.html";
@@ -119,7 +114,7 @@ function myParcels(my_url=false) {
         currentPage = my_url;
     }
     else{
-        currentPage = currentPage = url + '/api/v2/users/'+localStorage.getItem("this_id")+'/parcels';
+        currentPage = currentPage = url + '/api/v2/orders';
     }
 
     let statusCode = undefined;
@@ -138,8 +133,8 @@ function myParcels(my_url=false) {
         }
         return response.json();
     }).then(function (data) {
-        console.log(data);
-        let the_parcel = data["Parcels"];
+        console.log(data)
+        let the_parcel = data["Orders"];
         if (statusCode === 200){
             let my_loop = undefined;
 
@@ -151,14 +146,11 @@ function myParcels(my_url=false) {
 
             let page_title = makeNode("h4");
             page_title.classList.add("general-tables-title");
-            page_title.textContent = "My Parcels |"+ `${data["Total Parcels"]} parcel(s).`;
+            page_title.textContent = "All Orders |"+ `${data["Total Orders"]} Order(s).`;
             
             the_adder(header_div,page_title);
 
             the_adder(holder, header_div);
-
-            let my_parcels = makeNode("div");
-
             let the_loop = the_parcel.map(function(a_parc){
                 let div1 = makeNode("div");
                 div1.setAttribute("id","order_parcel12");
@@ -170,11 +162,11 @@ function myParcels(my_url=false) {
 
                 let div2a_label1 = makeNode("label");
                 div2a_label1.classList.add("item-head");
-                div2a_label1.textContent = "Parcel ID: ";
+                div2a_label1.textContent = "Order ID: ";
 
                 let div2a_label2 = makeNode("label");
                 div2a_label2.classList.add("item-body");
-                div2a_label2.textContent = `${a_parc.parcel_id}`;
+                div2a_label2.textContent = `${a_parc.order_id}`;
 
                 the_adder(div2a, div2a_label1);
                 the_adder(div2a,div2a_label2);
@@ -202,109 +194,48 @@ function myParcels(my_url=false) {
 
                 let div2c_label2 = makeNode("label");
                 div2c_label2.classList.add("item-body");
-                div2c_label2.textContent = `${a_parc.approved}`;
+                div2c_label2.textContent = `${a_parc.order_status}`;
 
                 the_adder(div2c, div2c_label1);
                 the_adder(div2c,div2c_label2);
 
-                let div2e = makeNode("div");
-                div2e.classList.add("table-cell");
-
-                let div2e_label1 = makeNode("label");
-                div2e_label1.classList.add("item-head");
-                div2e_label1.textContent = "Status: ";
-
-                let div2e_label2 = makeNode("label");
-                div2e_label2.classList.add("item-body");
-                div2e_label2.textContent = `${a_parc.status}`;
-
-                the_adder(div2e, div2e_label1);
-                the_adder(div2e,div2e_label2);
-
                 let div2d = makeNode("div");
                 div2d.classList.add("right-set");
 
-                if (a_parc.approved === "approved"){
-                    if(a_parc.status === "in_transit" || a_parc.status === "not_started"){
-                        //cancel delivery
-                        let div2d_label1 = makeNode("button");
-                        div2d_label1.classList.add("btn-error");
-                        div2d_label1.classList.add("view-align");
-                        div2d_label1.textContent = "Cancel Delivery";
-                        div2d_label1.setAttribute("onclick",`userCancelParcel("${a_parc.parcel_id}")`);
+                //process order
+                let div2d_label1 = makeNode("button");
+                div2d_label1.classList.add("btn-error");
+                div2d_label1.classList.add("view-align");
+                div2d_label1.textContent = "Process";
+                div2d_label1.setAttribute("onclick",`processOrder("${a_parc.order_id}","${a_parc.parcel_id}")`);
 
-                        the_adder(div2d, div2d_label1);
+                the_adder(div2d, div2d_label1);
 
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
+                //view order
+                div2d_label10 = makeNode("button");
+                div2d_label10.classList.add("view-btn");
+                div2d_label10.classList.add("view-align");
+                div2d_label10.textContent = "View Order";
+                div2d_label10.setAttribute("onclick",`viewOrder("${a_parc.order_id}")`);
 
-                        the_adder(div2d, div2d_label10);
-                    }
-                    else{
-                        //view parcel
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
+                the_adder(div2d, div2d_label10);
 
-                        the_adder(div2d, div2d_label10);
-                        
-                    }
-                }
-                else{
-                    if(a_parc.order_id !== "0"){
-                        //Edit Order
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "Edit Parcel's Order";
-                        div2d_label10.setAttribute("onclick",`editOrder("${a_parc.order_id}")`);
+                //delete order
+                div2d_label11 = makeNode("button");
+                div2d_label11.classList.add("btn-error");
+                div2d_label11.classList.add("view-align");
+                div2d_label11.textContent = "Delete Order";
+                div2d_label11.setAttribute("onclick",`deleteOrder("${a_parc.order_id}")`);
 
-                        the_adder(div2d, div2d_label10);
-
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-                    }
-                    else{
-                        //Make Order
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "Make Order";
-                        div2d_label10.setAttribute("onclick",`makeOrder("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-                    }
-                }
+                the_adder(div2d, div2d_label11);
 
                 the_adder(div1, div2a);
                 the_adder(div1, div2b);
                 the_adder(div1, div2c);
-                the_adder(div1, div2e);
                 the_adder(div1, div2d);
                 the_adder(holder, div1);
-            });
 
+            });
             let next_prev_buttons =  makeNode("div");
             next_prev_buttons.classList.add("next-prev");
 
@@ -322,9 +253,9 @@ function myParcels(my_url=false) {
             the_adder(next_prev_buttons, next_label1);
 
             the_adder(holder,next_prev_buttons);
-            
+
         }
-        else {
+        else{
             if(statusCode === 401){
                 alert(data.message);
                 console.log(data.message);
@@ -341,10 +272,10 @@ function myParcels(my_url=false) {
                 for(i=0; i<myErrors.length;i++){
                     message += data.Errors[(myErrors[i])]+"\n";
                 }
-                alert(message)
+                alert(message);
             }
         }
 
-        
     }).catch(err => console.log(err))
+
 }

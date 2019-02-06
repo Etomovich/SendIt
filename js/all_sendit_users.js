@@ -5,7 +5,7 @@ window.addEventListener("load", startPoint);
 
 function startPoint(e){
     e.preventDefault();
-    return myParcels();
+    return allUsers();
 }
 
 function nextPage(page) {
@@ -27,7 +27,7 @@ function viewNext(next_url){
     else{
         let holder = document.getElementById("main-section12");
         holder.innerHTML = "";
-        return myParcels(my_url=next_url);
+        return allUsers(my_url=next_url);
     }    
 }
 
@@ -38,18 +38,28 @@ function viewPrevious(prev_url){
     else{
         let holder = document.getElementById("main-section12");
         holder.innerHTML = "";
-        return myParcels(my_url=prev_url);
+        return allUsers(my_url=prev_url);
     } 
 }
 
-function userCancelParcel(my_parc_id){
-    let mess = "Note: Cancelling this parcel delivery will cause this parcel to be returned to the initial submission station. "
-    mess = mess + "Press OK to cancel delivery.\n"
-    mess =  mess + "Are you sure you want to cancel this parcel delivery??\n";
+function viewUser(this_id){
+    my_view_user_page = "user_info10.html";
+    localStorage.setItem('view_user_id', this_id);
+    nextPage(my_view_user_page);
+}
+
+function assignAdmin(this_id){
+    let mess = "Note: You are about to make this user an admin.\n"
+    mess =  mess + "Are you sure you want to make this user an admin??\n";
+    change_role = "Admin";
     if (confirm(mess)){
-        let currentPage = url + '/api/v2/parcels/'+String(my_parc_id)+'/cancel';
+        let currentPage = url + '/api/v2/user/'+String(this_id);
         fetch(currentPage, {
             method: 'put',
+            mode: 'cors',
+            body: JSON.stringify({
+                role: change_role
+            }),
             headers: {
                 "Content-type": "application/json; charset=utf-8",
                 "Authorization": localStorage.getItem("this_token")
@@ -58,7 +68,7 @@ function userCancelParcel(my_parc_id){
             statusCode = response.status;
             console.log(statusCode);
             if (statusCode!== 200) {
-                console.log('Error occured while fetching not started parcels. Status ' +
+                console.log('Error occured while changing role to user. Status ' +
                     response.status);
             }
             return response.json();
@@ -78,10 +88,63 @@ function userCancelParcel(my_parc_id){
                 }
             }
             else{
-                alert("Parcel delivery sucessfully cancelled!!");
+                alert("Role changed!!");
                 let holder = document.getElementById("main-section12");
                 holder.innerHTML = "";
-                return myParcels();
+                return allUsers();
+            }        
+        }).catch(err => console.log(err))
+    }
+    else{
+        //do nothing...
+    }
+
+}
+
+function assignUser(this_id){
+    let mess = "Note: You are about to make this admin to user.\n"
+    mess =  mess + "Are you sure you want to make this admin a user??\n";
+    change_role = "User";
+    if (confirm(mess)){
+        let currentPage = url + '/api/v2/user/'+String(this_id);
+        fetch(currentPage, {
+            method: 'put',
+            mode: 'cors',
+            body: JSON.stringify({
+                role: change_role
+            }),
+            headers: {
+                "Content-type": "application/json; charset=utf-8",
+                "Authorization": localStorage.getItem("this_token")
+            }
+        }).then(function (response) {
+            statusCode = response.status;
+            console.log(statusCode);
+            if (statusCode!== 200) {
+                console.log('Error occured while changing role to admin. Status ' +
+                    response.status);
+            }
+            return response.json();
+        }).then(function (data) {
+            if (statusCode !== 200){
+                if(statusCode === 401){
+                    alert(data.Status);
+                    console.log(data.Status);
+                }
+                else{
+                    let message = "";
+                    const myErrors = Object.keys(data.Errors);
+                    for(i=0; i<myErrors.length;i++){
+                        message += data.Errors[(myErrors[i])]+"\n";
+                    }
+                    alert(message)
+                }
+            }
+            else{
+                alert("Role Changed!!");
+                let holder = document.getElementById("main-section12");
+                holder.innerHTML = "";
+                return allUsers();
             }        
         }).catch(err => console.log(err))
     }
@@ -90,25 +153,54 @@ function userCancelParcel(my_parc_id){
     }
 }
 
-function makeOrder(my_parc_id){
-    let my_make_parcel_page = "make_order10.html";
-    localStorage.setItem('make_order_parc_id', my_parc_id);
-    nextPage(my_make_parcel_page); 
+function deleteUser(this_id){
+    let mess = "Note: You are about to delete this user\n"
+    mess =  mess + "Are you sure you want to delete this user??\n";
+    if (confirm(mess)){
+        let currentPage = url + '/api/v2/user/'+String(this_id);
+        fetch(currentPage, {
+            method: 'delete',
+            headers: {
+                "Content-type": "application/json; charset=utf-8",
+                "Authorization": localStorage.getItem("this_token")
+            }
+        }).then(function (response) {
+            statusCode = response.status;
+            console.log(statusCode);
+            if (statusCode!== 200) {
+                console.log('Error occured while deleting a user. Status ' +
+                    response.status);
+            }
+            return response.json();
+        }).then(function (data) {
+            if (statusCode !== 200){
+                if(statusCode === 401){
+                    alert(data.Status);
+                    console.log(data.Status);
+                }
+                else{
+                    let message = "";
+                    const myErrors = Object.keys(data.Errors);
+                    for(i=0; i<myErrors.length;i++){
+                        message += data.Errors[(myErrors[i])]+"\n";
+                    }
+                    alert(message)
+                }
+            }
+            else{
+                alert("User deleted!!");
+                let holder = document.getElementById("main-section12");
+                holder.innerHTML = "";
+                return allUsers();
+            }        
+        }).catch(err => console.log(err))
+    }
+    else{
+        //do nothing...
+    }
 }
 
-function editOrder(my_order_id){
-    let my_edit_parcel_page = "edit_order10.html";
-    localStorage.setItem('edit_order_id', my_order_id);
-    nextPage(my_edit_parcel_page); 
-}
-
-function userViewParcel(my_parc_id){
-    my_view_parcel_page = "view_parcel10.html";
-    localStorage.setItem('view_parc_id', my_parc_id);
-    nextPage(my_view_parcel_page);    
-}
-
-function myParcels(my_url=false) {
+function allUsers(my_url=false){
     if(localStorage.getItem("this_token")=== null){
         alert("Please login to access this page!!");
         let the_login = "login.html";
@@ -119,7 +211,7 @@ function myParcels(my_url=false) {
         currentPage = my_url;
     }
     else{
-        currentPage = currentPage = url + '/api/v2/users/'+localStorage.getItem("this_id")+'/parcels';
+        currentPage = currentPage = url + '/api/v2/users';
     }
 
     let statusCode = undefined;
@@ -133,13 +225,13 @@ function myParcels(my_url=false) {
         statusCode = response.status;
         console.log(statusCode);
         if (statusCode!== 200) {
-            console.log('Error occured while fetching not started parcels. Status ' +
+            console.log('Error occured while fetching sendit users. Status ' +
                 response.status);
         }
         return response.json();
     }).then(function (data) {
         console.log(data);
-        let the_parcel = data["Parcels"];
+        let the_user = data["Users"];
         if (statusCode === 200){
             let my_loop = undefined;
 
@@ -151,7 +243,7 @@ function myParcels(my_url=false) {
 
             let page_title = makeNode("h4");
             page_title.classList.add("general-tables-title");
-            page_title.textContent = "My Parcels |"+ `${data["Total Parcels"]} parcel(s).`;
+            page_title.textContent = "All Users |"+ `${data["Total Users"]} user(s).`;
             
             the_adder(header_div,page_title);
 
@@ -159,7 +251,7 @@ function myParcels(my_url=false) {
 
             let my_parcels = makeNode("div");
 
-            let the_loop = the_parcel.map(function(a_parc){
+            let the_loop = the_user.map(function(a_person){
                 let div1 = makeNode("div");
                 div1.setAttribute("id","order_parcel12");
                 div1.classList.add("table-item");
@@ -170,11 +262,11 @@ function myParcels(my_url=false) {
 
                 let div2a_label1 = makeNode("label");
                 div2a_label1.classList.add("item-head");
-                div2a_label1.textContent = "Parcel ID: ";
+                div2a_label1.textContent = "User ID: ";
 
                 let div2a_label2 = makeNode("label");
                 div2a_label2.classList.add("item-body");
-                div2a_label2.textContent = `${a_parc.parcel_id}`;
+                div2a_label2.textContent = `${a_person.user_id}`;
 
                 the_adder(div2a, div2a_label1);
                 the_adder(div2a,div2a_label2);
@@ -184,11 +276,11 @@ function myParcels(my_url=false) {
 
                 let div2b_label1 = makeNode("label");
                 div2b_label1.classList.add("item-head");
-                div2b_label1.textContent = "Parcel Name: ";
+                div2b_label1.textContent = "Username: ";
 
                 let div2b_label2 = makeNode("label");
                 div2b_label2.classList.add("item-body");
-                div2b_label2.textContent = `${a_parc.parcel_name}`;
+                div2b_label2.textContent = `${a_person.username}`;
 
                 the_adder(div2b, div2b_label1);
                 the_adder(div2b,div2b_label2);
@@ -198,11 +290,11 @@ function myParcels(my_url=false) {
 
                 let div2c_label1 = makeNode("label");
                 div2c_label1.classList.add("item-head");
-                div2c_label1.textContent = "Approved: ";
+                div2c_label1.textContent = "Phone: ";
 
                 let div2c_label2 = makeNode("label");
                 div2c_label2.classList.add("item-body");
-                div2c_label2.textContent = `${a_parc.approved}`;
+                div2c_label2.textContent = `${a_person.phone_number}`;
 
                 the_adder(div2c, div2c_label1);
                 the_adder(div2c,div2c_label2);
@@ -212,11 +304,11 @@ function myParcels(my_url=false) {
 
                 let div2e_label1 = makeNode("label");
                 div2e_label1.classList.add("item-head");
-                div2e_label1.textContent = "Status: ";
+                div2e_label1.textContent = "Role: ";
 
                 let div2e_label2 = makeNode("label");
                 div2e_label2.classList.add("item-body");
-                div2e_label2.textContent = `${a_parc.status}`;
+                div2e_label2.textContent = `${a_person.role}`;
 
                 the_adder(div2e, div2e_label1);
                 the_adder(div2e,div2e_label2);
@@ -224,78 +316,46 @@ function myParcels(my_url=false) {
                 let div2d = makeNode("div");
                 div2d.classList.add("right-set");
 
-                if (a_parc.approved === "approved"){
-                    if(a_parc.status === "in_transit" || a_parc.status === "not_started"){
-                        //cancel delivery
-                        let div2d_label1 = makeNode("button");
-                        div2d_label1.classList.add("btn-error");
-                        div2d_label1.classList.add("view-align");
-                        div2d_label1.textContent = "Cancel Delivery";
-                        div2d_label1.setAttribute("onclick",`userCancelParcel("${a_parc.parcel_id}")`);
+                //Assign Admin
+                let div2d_label10 = makeNode("button");
+                div2d_label10.classList.add("view-btn");
+                div2d_label10.classList.add("view-align");
+                div2d_label10.textContent = "Assign Admin";
+                div2d_label10.setAttribute("onclick",`assignAdmin("${a_person.user_id}")`);
 
-                        the_adder(div2d, div2d_label1);
-
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-                    }
-                    else{
-                        //view parcel
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-                        
-                    }
+                if(a_person.role === "User"){
+                    the_adder(div2d, div2d_label10);
                 }
-                else{
-                    if(a_parc.order_id !== "0"){
-                        //Edit Order
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "Edit Parcel's Order";
-                        div2d_label10.setAttribute("onclick",`editOrder("${a_parc.order_id}")`);
 
-                        the_adder(div2d, div2d_label10);
+                //Assign User
+                let div2d_label13 = makeNode("button");
+                div2d_label13.classList.add("view-btn");
+                div2d_label13.classList.add("view-align");
+                div2d_label13.textContent = "Assign User";
+                div2d_label13.setAttribute("onclick",`assignUser("${a_person.user_id}")`);
 
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-                    }
-                    else{
-                        //Make Order
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "Make Order";
-                        div2d_label10.setAttribute("onclick",`makeOrder("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-                    }
+                if(a_person.role === "Admin"){
+                    the_adder(div2d, div2d_label13);
                 }
+
+                //View User
+                let div2d_label11 = makeNode("button");
+                div2d_label11.classList.add("view-btn");
+                div2d_label11.classList.add("view-align");
+                div2d_label11.textContent = "View";
+                div2d_label11.setAttribute("onclick",`viewUser("${a_person.user_id}")`);
+
+                the_adder(div2d, div2d_label11);
+                
+
+                //delete User
+                let div2d_label1 = makeNode("button");
+                div2d_label1.classList.add("btn-error");
+                div2d_label1.classList.add("view-align");
+                div2d_label1.textContent = "Delete";
+                div2d_label1.setAttribute("onclick",`deleteUser("${a_person.user_id}")`);
+
+                the_adder(div2d, div2d_label1);
 
                 the_adder(div1, div2a);
                 the_adder(div1, div2b);
@@ -304,7 +364,6 @@ function myParcels(my_url=false) {
                 the_adder(div1, div2d);
                 the_adder(holder, div1);
             });
-
             let next_prev_buttons =  makeNode("div");
             next_prev_buttons.classList.add("next-prev");
 
@@ -322,7 +381,6 @@ function myParcels(my_url=false) {
             the_adder(next_prev_buttons, next_label1);
 
             the_adder(holder,next_prev_buttons);
-            
         }
         else {
             if(statusCode === 401){
@@ -344,7 +402,5 @@ function myParcels(my_url=false) {
                 alert(message)
             }
         }
-
-        
     }).catch(err => console.log(err))
 }

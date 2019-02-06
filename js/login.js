@@ -1,4 +1,6 @@
-const url = 'https://etomovich-sendit.herokuapp.com';
+//const url = 'http://127.0.0.1:5000';
+let url = "https://etomovich-sendit.herokuapp.com";
+
 document.getElementById("loginButton123").addEventListener("click", loginUser);
 
 
@@ -43,7 +45,7 @@ function loginUser(e) {
             console.log(role);
             console.log(myId);
             if (role === 'Admin') {
-                startPage = "admin_dashboard.html";
+                startPage = "admin_dash10.html";
             }
             if (role === 'User') {
                 startPage = "user_dashboard.html";
@@ -61,9 +63,9 @@ function loginUser(e) {
             }
             else{
                 let message = "";
-                let myErrors = data.Errors;
+                const myErrors = Object.keys(data.Errors);
                 for(i=0; i<myErrors.length;i++){
-                    message += myErrors[i]+"\n";
+                    message += data.Errors[(myErrors[i])]+"\n";
                 }
                 alert(message);
             }

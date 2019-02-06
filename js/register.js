@@ -1,4 +1,5 @@
-const url = 'https://etomovich-sendit.herokuapp.com';
+//const url = 'http://127.0.0.1:5000';
+let url = "https://etomovich-sendit.herokuapp.com";
 
 document.getElementById("registerButton").addEventListener("click", registerUser);
 
@@ -19,10 +20,12 @@ function registerUser(exe){
 
     let the_next = undefined;
     let statusCode = undefined; 
+    let currentPage = undefined;
 
-    fetch(url + '/api/v2/register', {
+    currentPage = currentPage = url + '/api/v2/register'; 
+
+    fetch(currentPage, {
         method: 'post',
-        mode:"cors",
         headers: {
             "Content-type": "application/json; charset=utf-8",
             "Accept":"application/json"
@@ -32,7 +35,7 @@ function registerUser(exe){
             email: myEmail,
             phone_number: myPhone,
             password: myPassword,
-            retype_pasword: retypePassword
+            retype_password: retypePassword
         })
     }).then(function (response) {
         statusCode = response.status;
@@ -61,14 +64,14 @@ function registerUser(exe){
                 console.log(data.Status);
             }
             else if(statusCode === 500){
-                alert(data.Status);
+                alert(data.message);
                 console.log(data.Status);
             }
             else{
                 let message = "";
-                let myErrors = data.Errors;
+                const myErrors = Object.keys(data.Errors);
                 for(i=0; i<myErrors.length;i++){
-                    message += myErrors[i]+"\n"
+                    message += data.Errors[(myErrors[i])]+"\n";
                 }
                 alert(message)
             }

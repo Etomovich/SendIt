@@ -1,11 +1,11 @@
 //const url = 'http://127.0.0.1:5000';
-let url = "https://etomovich-sendit.herokuapp.com";
+let url = 'https://etomovich-sendit.herokuapp.com';
 
 window.addEventListener("load", startPoint);
 
 function startPoint(e){
     e.preventDefault();
-    return myParcels();
+    return allParcels();
 }
 
 function nextPage(page) {
@@ -20,36 +20,25 @@ function the_adder(container,item){
     return container.appendChild(item);
 }
 
-function viewNext(next_url){
-    if(next_url === "END"){
-        alert("This is the final page.")
-    }
-    else{
-        let holder = document.getElementById("main-section12");
-        holder.innerHTML = "";
-        return myParcels(my_url=next_url);
-    }    
+function viewParcel(my_parc_id){
+    my_view_parcel_page = "view_parcel10.html";
+    localStorage.setItem('view_parc_id', my_parc_id);
+    nextPage(my_view_parcel_page);    
 }
 
-function viewPrevious(prev_url){
-    if(prev_url === "BEGINNING"){
-        alert("This is the first page.")
-    }
-    else{
-        let holder = document.getElementById("main-section12");
-        holder.innerHTML = "";
-        return myParcels(my_url=prev_url);
-    } 
+function editParcel(my_parc_id){
+    my_view_parcel_page = "edit_parcel10.html";
+    localStorage.setItem('edit_parcel_id1', my_parc_id);
+    nextPage(my_view_parcel_page);    
 }
 
-function userCancelParcel(my_parc_id){
-    let mess = "Note: Cancelling this parcel delivery will cause this parcel to be returned to the initial submission station. "
-    mess = mess + "Press OK to cancel delivery.\n"
-    mess =  mess + "Are you sure you want to cancel this parcel delivery??\n";
+function deleteParcel(my_parc_id){
+    let mess = "Note: You are about to delete this parcel\n"
+    mess =  mess + "Are you sure you want to delete this parcel??\n";
     if (confirm(mess)){
-        let currentPage = url + '/api/v2/parcels/'+String(my_parc_id)+'/cancel';
+        let currentPage = url + '/api/v2/parcels/'+String(my_parc_id);
         fetch(currentPage, {
-            method: 'put',
+            method: 'delete',
             headers: {
                 "Content-type": "application/json; charset=utf-8",
                 "Authorization": localStorage.getItem("this_token")
@@ -78,10 +67,10 @@ function userCancelParcel(my_parc_id){
                 }
             }
             else{
-                alert("Parcel delivery sucessfully cancelled!!");
+                alert("Parcel deleted!!");
                 let holder = document.getElementById("main-section12");
                 holder.innerHTML = "";
-                return myParcels();
+                return allParcels();
             }        
         }).catch(err => console.log(err))
     }
@@ -90,25 +79,29 @@ function userCancelParcel(my_parc_id){
     }
 }
 
-function makeOrder(my_parc_id){
-    let my_make_parcel_page = "make_order10.html";
-    localStorage.setItem('make_order_parc_id', my_parc_id);
-    nextPage(my_make_parcel_page); 
+function viewNext(next_url){
+    if(next_url === "END"){
+        alert("This is the final page.")
+    }
+    else{
+        let holder = document.getElementById("main-section12");
+        holder.innerHTML = "";
+        return allParcels(my_url=next_url);
+    }    
 }
 
-function editOrder(my_order_id){
-    let my_edit_parcel_page = "edit_order10.html";
-    localStorage.setItem('edit_order_id', my_order_id);
-    nextPage(my_edit_parcel_page); 
+function viewPrevious(prev_url){
+    if(prev_url === "BEGINNING"){
+        alert("This is the first page.")
+    }
+    else{
+        let holder = document.getElementById("main-section12");
+        holder.innerHTML = "";
+        return allParcels(my_url=prev_url);
+    } 
 }
 
-function userViewParcel(my_parc_id){
-    my_view_parcel_page = "view_parcel10.html";
-    localStorage.setItem('view_parc_id', my_parc_id);
-    nextPage(my_view_parcel_page);    
-}
-
-function myParcels(my_url=false) {
+function allParcels(my_url=false) {
     if(localStorage.getItem("this_token")=== null){
         alert("Please login to access this page!!");
         let the_login = "login.html";
@@ -119,7 +112,8 @@ function myParcels(my_url=false) {
         currentPage = my_url;
     }
     else{
-        currentPage = currentPage = url + '/api/v2/users/'+localStorage.getItem("this_id")+'/parcels';
+        currentPage = url.concat('/api/v2/parcels');
+        console.log(currentPage);
     }
 
     let statusCode = undefined;
@@ -139,7 +133,7 @@ function myParcels(my_url=false) {
         return response.json();
     }).then(function (data) {
         console.log(data);
-        let the_parcel = data["Parcels"];
+        let the_parcel = data["All Parcels"];
         if (statusCode === 200){
             let my_loop = undefined;
 
@@ -151,7 +145,7 @@ function myParcels(my_url=false) {
 
             let page_title = makeNode("h4");
             page_title.classList.add("general-tables-title");
-            page_title.textContent = "My Parcels |"+ `${data["Total Parcels"]} parcel(s).`;
+            page_title.textContent = "All Parcels |"+ `${data["Total Parcels"]} parcel(s).`;
             
             the_adder(header_div,page_title);
 
@@ -224,78 +218,33 @@ function myParcels(my_url=false) {
                 let div2d = makeNode("div");
                 div2d.classList.add("right-set");
 
-                if (a_parc.approved === "approved"){
-                    if(a_parc.status === "in_transit" || a_parc.status === "not_started"){
-                        //cancel delivery
-                        let div2d_label1 = makeNode("button");
-                        div2d_label1.classList.add("btn-error");
-                        div2d_label1.classList.add("view-align");
-                        div2d_label1.textContent = "Cancel Delivery";
-                        div2d_label1.setAttribute("onclick",`userCancelParcel("${a_parc.parcel_id}")`);
+                //Edit Parcel
+                let div2d_label10 = makeNode("button");
+                div2d_label10.classList.add("view-btn");
+                div2d_label10.classList.add("view-align");
+                div2d_label10.textContent = "Edit";
+                div2d_label10.setAttribute("onclick",`editParcel("${a_parc.parcel_id}")`);
 
-                        the_adder(div2d, div2d_label1);
+                the_adder(div2d, div2d_label10);
 
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
+                //View Parcel
+                let div2d_label11 = makeNode("button");
+                div2d_label11.classList.add("view-btn");
+                div2d_label11.classList.add("view-align");
+                div2d_label11.textContent = "View";
+                div2d_label11.setAttribute("onclick",`viewParcel("${a_parc.parcel_id}")`);
 
-                        the_adder(div2d, div2d_label10);
-                    }
-                    else{
-                        //view parcel
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
+                the_adder(div2d, div2d_label11);
+                
 
-                        the_adder(div2d, div2d_label10);
-                        
-                    }
-                }
-                else{
-                    if(a_parc.order_id !== "0"){
-                        //Edit Order
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "Edit Parcel's Order";
-                        div2d_label10.setAttribute("onclick",`editOrder("${a_parc.order_id}")`);
+                //delete parcel
+                let div2d_label1 = makeNode("button");
+                div2d_label1.classList.add("btn-error");
+                div2d_label1.classList.add("view-align");
+                div2d_label1.textContent = "Delete";
+                div2d_label1.setAttribute("onclick",`deleteParcel("${a_parc.parcel_id}")`);
 
-                        the_adder(div2d, div2d_label10);
-
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-                    }
-                    else{
-                        //Make Order
-                        let div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "Make Order";
-                        div2d_label10.setAttribute("onclick",`makeOrder("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-
-                        //view parcel
-                        div2d_label10 = makeNode("button");
-                        div2d_label10.classList.add("view-btn");
-                        div2d_label10.classList.add("view-align");
-                        div2d_label10.textContent = "View Parcel";
-                        div2d_label10.setAttribute("onclick",`userViewParcel("${a_parc.parcel_id}")`);
-
-                        the_adder(div2d, div2d_label10);
-                    }
-                }
+                the_adder(div2d, div2d_label1);
 
                 the_adder(div1, div2a);
                 the_adder(div1, div2b);
@@ -344,7 +293,5 @@ function myParcels(my_url=false) {
                 alert(message)
             }
         }
-
-        
     }).catch(err => console.log(err))
 }
