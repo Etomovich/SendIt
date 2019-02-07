@@ -12,22 +12,7 @@
     <header class="head-div clearfix">
         <div class="sendit-logo">
             <h1><a href="index.html">SendIt</a></h1>
-        </div>
-        <nav class="navig">
-            <ul>
-                <li><a href="user_dashboard.html">User Dashboard</a></li>
-                <li><a href="admin_dashboard.html">Admin Dashboard</a></li>
-            </ul>
-        </nav>
-        <nav class="navig2">
-            <div class="dropdown">
-                <button class="nav-small-devices dropbtn" onclick="myFunction()">&#9776;</button>
-                <div class="dropdown-content" id="myDropdown">
-                    <a href="user_dashboard.html">User Dash</a>
-                    <a href="admin_dashboard.html">Admin Dash</a>
-                </div>
-            </div>
-        </nav>                    
+        </div>                   
     </header>
     <section class="login-main">
         <div class="banner">
@@ -38,21 +23,21 @@
             <a class="btn-banner" href="register.html">Sign Up</a>
         </div>
         <div class="login-div">
-            <form action="#" method="#">
+            <form action="#" id="loginForm">
                 <fieldset class="login-group">
                     <label>
-                        Username/Email
-                        <input type="text" name="name" placeholder="Enter 'Username' or 'email'" required>
+                        Username
+                        <input type="text" id="myName" placeholder="Enter 'Username'" required>
                     </label>
     
                     <label>
                         Password
-                        <input type="password" name="email" placeholder="Password" required>
+                        <input type="password" id="myPassword" placeholder="Password" required>
                     </label>
                 </fieldset>
-                    <br>
-                    <input class="btn-form" type="submit" name="submit" value="Login">
-                </form>
+                <br>
+                <input class="btn-form" type="submit" name="submit" value="Login" id="loginButton123">
+            </form>
     
             </div>
         
@@ -63,6 +48,6 @@
             <p>SendIt Courier Services &copy; 2018</p>
         </div>
     </footer>
-
+<script src="js/login.js"></script>
 </body>
 </html>
